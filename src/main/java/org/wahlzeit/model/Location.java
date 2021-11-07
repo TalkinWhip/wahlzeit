@@ -1,7 +1,7 @@
 package org.wahlzeit.model;
 
 public class Location {
-    public Coordinate coordinate;
+    private Coordinate coordinate;
 
     /**
      *
@@ -17,5 +17,11 @@ public class Location {
     public Coordinate getCoordinate() {
         return coordinate;
     }
-
+    /**
+     *
+     * @methodtype set
+     */
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
+    }
 }

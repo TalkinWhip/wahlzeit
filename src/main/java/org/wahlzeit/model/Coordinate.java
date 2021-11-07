@@ -48,4 +48,26 @@ public class Coordinate {
     public double getZ() {
         return z;
     }
+
+    /**
+     *
+     * @methodtype set
+     */
+    public void setX(double x) {
+        this.x = x;
+    }
+    /**
+     *
+     * @methodtype set
+     */
+    public void setY(double y) {
+        this.y = y;
+    }
+    /**
+     *
+     * @methodtype set
+     */
+    public void setZ(double z) {
+        this.z = z;
+    }
 }

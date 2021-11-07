@@ -45,8 +45,8 @@ public class Photo extends DataObject {
 	/**
 	 * 
 	 */
+	//protected Location location = new Location(); - would have filled sql coord with 0s, using space, opted for an if statement on write instead
 	protected Location location;
-
 	/**
 	 *
 	 */
@@ -154,6 +154,7 @@ public class Photo extends DataObject {
 		creationTime = rset.getLong("creation_time");
 
 		maxPhotoSize = PhotoSize.getFromWidthHeight(width, height);
+		location = new Location(new Coordinate(rset.getDouble("coord_x"),rset.getDouble("coord_y"),rset.getDouble("coord_z")));
 	}
 	
 	/**
@@ -173,7 +174,14 @@ public class Photo extends DataObject {
 		rset.updateInt("status", status.asInt());
 		rset.updateInt("praise_sum", praiseSum);
 		rset.updateInt("no_votes", noVotes);
-		rset.updateLong("creation_time", creationTime);		
+		rset.updateLong("creation_time", creationTime);
+		if (location!=null){
+			rset.updateDouble("coord_x", location.getCoordinate().getX());
+			rset.updateDouble("coord_y", location.getCoordinate().getY());
+			rset.updateDouble("coord_z", location.getCoordinate().getZ());
+			// location can be recreated by using the three coordinate doubles - saves storage space
+		}
+
 	}
 
 	/**

@@ -10,6 +10,15 @@ public class Location {
     public Location(Coordinate coordinate) {
         this.coordinate = coordinate;
     }
+
+    /**
+     *
+     * @methodtype constructor
+     */
+    //convenience constructor
+    public Location() {
+        this.coordinate = new Coordinate();
+    }
     /**
      *
      * @methodtype get

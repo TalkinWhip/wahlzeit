@@ -91,9 +91,11 @@ public class Coordinate {
     public boolean equals(Object compare){
         if (this.getClass() == compare.getClass()) {
             Coordinate loc = (Coordinate) compare;
-            this.isEqual(loc);
+            return this.isEqual(loc);
         }
-        return false;
+        else {
+            return false;
+        }
     }
     /**
      *

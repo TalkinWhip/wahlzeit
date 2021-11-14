@@ -24,8 +24,8 @@ public class PhotoFactory {
 	 */
 	public static synchronized PhotoFactory getInstance() {
 		if (instance == null) {
-			SysLog.logSysInfo("setting generic PhotoFactory");
-			setInstance(new PhotoFactory());
+			SysLog.logSysInfo("setting domain-specific PhotoFactory");
+			setInstance(new ZuckPhotoFactory());
 		}
 		
 		return instance;
@@ -34,7 +34,7 @@ public class PhotoFactory {
 	/**
 	 * Method to set the singleton instance of PhotoFactory.
 	 */
-	protected static synchronized void setInstance(PhotoFactory photoFactory) {
+	protected static synchronized void setInstance(ZuckPhotoFactory photoFactory) {
 		if (instance != null) {
 			throw new IllegalStateException("attempt to initialize PhotoFactory twice");
 		}

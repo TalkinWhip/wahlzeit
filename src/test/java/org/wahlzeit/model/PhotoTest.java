@@ -1,6 +1,5 @@
 package org.wahlzeit.model;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.sql.ResultSet;

@@ -138,9 +138,13 @@ public class Photo extends DataObject {
 		ownerName = rset.getString("owner_name");
 		
 		ownerNotifyAboutPraise = rset.getBoolean("owner_notify_about_praise");
-		ownerEmailAddress = EmailAddress.getFromString(rset.getString("owner_email_address"));
+		if (rset.getString("owner_email_address")!=null) {
+			ownerEmailAddress = EmailAddress.getFromString(rset.getString("owner_email_address"));
+		}
 		ownerLanguage = Language.getFromInt(rset.getInt("owner_language"));
-		ownerHomePage = StringUtil.asUrl(rset.getString("owner_home_page"));
+		if (rset.getString("owner_home_page")!=null) {
+			ownerHomePage = StringUtil.asUrl(rset.getString("owner_home_page"));
+		}
 
 		width = rset.getInt("width");
 		height = rset.getInt("height");
@@ -165,9 +169,13 @@ public class Photo extends DataObject {
 		rset.updateInt("owner_id", ownerId);
 		rset.updateString("owner_name", ownerName);
 		rset.updateBoolean("owner_notify_about_praise", ownerNotifyAboutPraise);
-		rset.updateString("owner_email_address", ownerEmailAddress.asString());
+		if (ownerEmailAddress!=null) {
+			rset.updateString("owner_email_address", ownerEmailAddress.asString());
+		}
 		rset.updateInt("owner_language", ownerLanguage.asInt());
-		rset.updateString("owner_home_page", ownerHomePage.toString());
+		if (ownerHomePage != null) {
+			rset.updateString("owner_home_page", ownerHomePage.toString());
+		}
 		rset.updateInt("width", width);
 		rset.updateInt("height", height);
 		rset.updateString("tags", tags.asString());

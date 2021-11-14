@@ -32,7 +32,9 @@ CREATE TABLE photos (
 	creation_time bigint,
 	coord_x double precision,
 	coord_y double precision,
-	coord_z double precision
+	coord_z double precision,
+	yearOfPhoto integer,
+	mood text
 );
 
 CREATE TABLE tags (

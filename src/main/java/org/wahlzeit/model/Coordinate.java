@@ -1,5 +1,7 @@
 package org.wahlzeit.model;
 
+import java.util.Objects;
+
 public class Coordinate {
     private double x;
     private double y;
@@ -88,6 +90,7 @@ public class Coordinate {
      * @methodtype boolean-query
      */
     //deep compare of class
+    @Override
     public boolean equals(Object compare){
         if (this.getClass() == compare.getClass()) {
             Coordinate loc = (Coordinate) compare;
@@ -96,6 +99,11 @@ public class Coordinate {
         else {
             return false;
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x,y,z);
     }
     /**
      *

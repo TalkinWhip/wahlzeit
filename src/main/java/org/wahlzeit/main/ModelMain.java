@@ -32,6 +32,8 @@ public abstract class ModelMain extends AbstractMain {
  		loadGlobals();
 
 		PhotoFactory.initialize();
+		ZuckPhotoFactory.initialize();
+
 	}
 	
 	/**

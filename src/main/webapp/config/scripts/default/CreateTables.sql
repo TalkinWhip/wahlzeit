@@ -34,7 +34,8 @@ CREATE TABLE photos (
 	coord_y double precision,
 	coord_z double precision,
 	yearOfPhoto integer,
-	mood text
+	mood text,
+	is_spheric boolean
 );
 
 CREATE TABLE tags (

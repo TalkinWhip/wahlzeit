@@ -158,7 +158,17 @@ public class Photo extends DataObject {
 		creationTime = rset.getLong("creation_time");
 
 		maxPhotoSize = PhotoSize.getFromWidthHeight(width, height);
-		location = new Location(new Coordinate(rset.getDouble("coord_x"),rset.getDouble("coord_y"),rset.getDouble("coord_z")));
+		boolean isSpheric = rset.getBoolean("is_spheric");
+		double x = rset.getDouble("coord_x");
+		double y = rset.getDouble("coord_y");
+		double z = rset.getDouble("coord_z");
+
+		if (isSpheric){
+			location = new Location(new SphericCoordinate(x,y,z));
+		} else {
+			location = new Location(new CartesianCoordinate(x,y,z));
+		}
+
 	}
 	
 	/**
@@ -169,13 +179,9 @@ public class Photo extends DataObject {
 		rset.updateInt("owner_id", ownerId);
 		rset.updateString("owner_name", ownerName);
 		rset.updateBoolean("owner_notify_about_praise", ownerNotifyAboutPraise);
-		if (ownerEmailAddress!=null) {
-			rset.updateString("owner_email_address", ownerEmailAddress.asString());
-		}
+		rset.updateString("owner_email_address", ownerEmailAddress.asString());
 		rset.updateInt("owner_language", ownerLanguage.asInt());
-		if (ownerHomePage != null) {
-			rset.updateString("owner_home_page", ownerHomePage.toString());
-		}
+		rset.updateString("owner_home_page", ownerHomePage.toString());
 		rset.updateInt("width", width);
 		rset.updateInt("height", height);
 		rset.updateString("tags", tags.asString());
@@ -183,11 +189,18 @@ public class Photo extends DataObject {
 		rset.updateInt("praise_sum", praiseSum);
 		rset.updateInt("no_votes", noVotes);
 		rset.updateLong("creation_time", creationTime);
+		rset.updateBoolean("is_spheric", location.isSpheric());
 		if (location!=null){
-			rset.updateDouble("coord_x", location.getCoordinate().getX());
-			rset.updateDouble("coord_y", location.getCoordinate().getY());
-			rset.updateDouble("coord_z", location.getCoordinate().getZ());
-			// location can be recreated by using the three coordinate doubles - saves storage space
+			if (!location.isSpheric()){
+				rset.updateDouble("coord_x", location.getCoordinate().asCartesianCoordinate().getX());
+				rset.updateDouble("coord_y", location.getCoordinate().asCartesianCoordinate().getY());
+				rset.updateDouble("coord_z", location.getCoordinate().asCartesianCoordinate().getZ());
+			} else {
+				rset.updateDouble("coord_x", location.getCoordinate().asSphericCoordinate().getRadius());
+				rset.updateDouble("coord_y", location.getCoordinate().asSphericCoordinate().getTheta());
+				rset.updateDouble("coord_z", location.getCoordinate().asSphericCoordinate().getPhi());
+			}
+
 		}
 
 	}

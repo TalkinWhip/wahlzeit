@@ -2,6 +2,7 @@ package org.wahlzeit.model;
 
 public class Location {
     private Coordinate coordinate;
+    private boolean isSpheric = false;
 
     /**
      *
@@ -9,6 +10,7 @@ public class Location {
      */
     public Location(Coordinate coordinate) {
         this.coordinate = coordinate;
+        setSphericFlag(coordinate);
     }
 
     /**
@@ -17,7 +19,7 @@ public class Location {
      */
     //convenience constructor
     public Location() {
-        this.coordinate = new Coordinate();
+        this.coordinate = new CartesianCoordinate();
     }
     /**
      *
@@ -32,5 +34,18 @@ public class Location {
      */
     public void setCoordinate(Coordinate coordinate) {
         this.coordinate = coordinate;
+        setSphericFlag(coordinate);
+    }
+
+    public boolean isSpheric() {
+        return isSpheric;
+    }
+
+    public void setSphericFlag(Coordinate coordinate){
+        if (coordinate instanceof SphericCoordinate){
+            this.isSpheric = true;
+        } else {
+            this.isSpheric = false;
+        }
     }
 }

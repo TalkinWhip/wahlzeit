@@ -2,11 +2,11 @@ package org.wahlzeit.model;
 
 import java.util.Objects;
 
-public class CartesianCoordinate implements Coordinate {
+public class CartesianCoordinate extends AbstractCoordinate {
     private double x;
     private double y;
     private double z;
-    private double DELTA = 0.000001;
+
 
     /**
      *
@@ -63,9 +63,9 @@ public class CartesianCoordinate implements Coordinate {
     public boolean isEqual(Coordinate coordinate){
         if (getClass() == coordinate.getClass()) {
             CartesianCoordinate cCoord = coordinate.asCartesianCoordinate();
-            if (Math.abs(this.getX() - cCoord.getX())>DELTA ||
-                    Math.abs(this.getY() - cCoord.getY())>DELTA ||
-                    Math.abs(this.getZ() - cCoord.getZ())>DELTA) {
+            if (Math.abs(this.getX() - cCoord.getX())>getDELTA() ||
+                    Math.abs(this.getY() - cCoord.getY())>getDELTA() ||
+                    Math.abs(this.getZ() - cCoord.getZ())>getDELTA()) {
                 return false;
             } else {
                 return true;
@@ -77,15 +77,9 @@ public class CartesianCoordinate implements Coordinate {
             return false;
         }
     }
-    public double getCartesianDistance(Coordinate coordinate){
-        CartesianCoordinate cCoordinate = coordinate.asCartesianCoordinate();
-        return this.getDistance(cCoordinate);
+    public int hashCode() {
+        return Objects.hash(x,y,z);
     }
-    public double getCentralAngle(Coordinate coordinate){
-        SphericCoordinate sCoord = this.asSphericCoordinate();
-        return sCoord.getCentralAngle(coordinate);
-    }
-
     /**
      *
      * @methodtype get
@@ -135,31 +129,5 @@ public class CartesianCoordinate implements Coordinate {
      *
      * @methodtype boolean-query
      */
-    //deep compare of class
-    @Override
-    public boolean equals(Object compare){
-        if (this.getClass() == compare.getClass()) {
-            CartesianCoordinate loc = (CartesianCoordinate) compare;
-            return this.isEqual(loc);
-        }
-        else {
-            return false;
-        }
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(x,y,z);
-    }
-    /**
-     *
-     * @methodtype get
-     */
-    public double getDistance(CartesianCoordinate compare){
-        double powX = Math.pow((this.getX()-compare.getX()),2);
-        double powY = Math.pow((this.getY()-compare.getY()),2);
-        double powZ = Math.pow((this.getZ()-compare.getZ()),2);
-        double distance = Math.sqrt(powX+powY+powZ);
-        return distance;
-    }
 }

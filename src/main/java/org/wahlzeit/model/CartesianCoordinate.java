@@ -37,7 +37,7 @@ public class CartesianCoordinate implements Coordinate {
     public CartesianCoordinate asCartesianCoordinate() {
         return this;
     }
-    public SphericCoordinate asSphericCoordinate() {
+    public SphericCoordinate asSphericCoordinate() throws ArithmeticException{
         double radius;
         double theta;
         double phi;

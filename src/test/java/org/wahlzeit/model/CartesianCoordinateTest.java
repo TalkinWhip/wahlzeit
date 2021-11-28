@@ -28,13 +28,13 @@ public class CartesianCoordinateTest {
 
     @Test
     public void TestDistanceOne(){
-        assertEquals(firstCoord.getDistance(secondCoord),res1,0.00001);
+        assertEquals(firstCoord.getCartesianDistance(secondCoord),res1,0.00001);
 
 
     }
     @Test
     public void TestDistanceTwo(){
-        assertEquals(firstCoord.getDistance(emptyCoord),res2,0.00001);
+        assertEquals(firstCoord.getCartesianDistance(emptyCoord),res2,0.00001);
     }
 
     @Test
@@ -79,5 +79,9 @@ public class CartesianCoordinateTest {
         CartesianCoordinate temp;
         temp = firstCoord.asCartesianCoordinate();
         assertTrue(temp instanceof CartesianCoordinate);
+    }
+    @Test
+    public void testSuper(){
+        assertTrue(firstCoord.getClass().getSuperclass()==AbstractCoordinate.class);
     }
 }

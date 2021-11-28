@@ -33,5 +33,10 @@ public class SphericCoordinateTest {
         CartesianCoordinate temp = new CartesianCoordinate();
         assertEquals(cartCoord.getCartesianDistance(firstCoord), cartCoord.getCartesianDistance(temp),0.0001);
     }
+
+    @Test
+    public void testSuper(){
+        assertTrue(firstCoord.getClass().getSuperclass()==AbstractCoordinate.class);
+    }
 }
 

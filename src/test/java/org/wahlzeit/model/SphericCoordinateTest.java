@@ -1,12 +1,13 @@
 package org.wahlzeit.model;
 
 
+import net.bytebuddy.pool.TypePool;
 import org.junit.Test;
 import static org.junit.Assert.*;
 public class SphericCoordinateTest {
     SphericCoordinate firstCoord = new SphericCoordinate();
     SphericCoordinate secondCoord = new SphericCoordinate(1,2,3);
-    SphericCoordinate thirdCoord = new SphericCoordinate(-100,-100,-100);
+    //SphericCoordinate thirdCoord = new SphericCoordinate(-100,-100,-100);
     CartesianCoordinate cartCoord = new CartesianCoordinate(1,2,3);
 
     @Test
@@ -20,7 +21,7 @@ public class SphericCoordinateTest {
 
     @Test
     public void testCentralAngle(){
-        assertTrue(secondCoord.getCentralAngle(thirdCoord)>0);
+        assertTrue(secondCoord.getCentralAngle(cartCoord.asSphericCoordinate())>0);
 
     }
     @Test
@@ -38,5 +39,20 @@ public class SphericCoordinateTest {
     public void testSuper(){
         assertTrue(firstCoord.getClass().getSuperclass()==AbstractCoordinate.class);
     }
+    @Test(expected = NullPointerException.class)
+    public void testNullCoord() throws NullPointerException {
+        Coordinate testCoord = null;
+        firstCoord.equals(testCoord);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testNaNCoordinate(){
+        firstCoord.setPhi(Double.NaN);
+    }
+    @Test(expected = AssertionError.class)
+    public void testFalseCoordinate(){
+        SphericCoordinate testCoord = new SphericCoordinate(1,1,9);
+    }
+
 }
 

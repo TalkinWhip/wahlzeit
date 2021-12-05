@@ -16,6 +16,7 @@ public class SphericCoordinate extends AbstractCoordinate{
         this.radius = radius;
         this.theta = theta;
         this.phi = phi;
+        assertClassInvariants(); //at the end, otherwise would have to check them one by one as preconditions and I decided this is sufficient.
     }
     /**
      *
@@ -31,6 +32,9 @@ public class SphericCoordinate extends AbstractCoordinate{
 
 
     public CartesianCoordinate asCartesianCoordinate(){
+
+        assertClassInvariants();
+
         double x;
         double y;
         double z;
@@ -40,6 +44,7 @@ public class SphericCoordinate extends AbstractCoordinate{
         z = this.radius * Math.cos(this.theta);
 
         CartesianCoordinate temp = new CartesianCoordinate(x,y,z);
+        temp.assertClassInvariants();
         return temp;
 
     }
@@ -48,8 +53,11 @@ public class SphericCoordinate extends AbstractCoordinate{
     }
 
     public boolean isEqual(Coordinate coordinate){
+        assertNotNull(coordinate);
+        assertClassInvariants();
         if (getClass() == coordinate.getClass() ) {
             SphericCoordinate sCoord = coordinate.asSphericCoordinate();
+            sCoord.assertClassInvariants();
             if (Math.abs(this.getRadius() - sCoord.getRadius())>getDELTA() ||
                     Math.abs(this.getTheta() - sCoord.getTheta())>getDELTA() ||
                     Math.abs(this.getPhi() - sCoord.getPhi())>getDELTA()){
@@ -65,6 +73,9 @@ public class SphericCoordinate extends AbstractCoordinate{
     }
 
     protected double doGetCentralAngle(SphericCoordinate otherCoord){
+        assertClassInvariants();
+        otherCoord.assertClassInvariants();
+
         double centralAngle = Math.toDegrees(Math.acos(Math.sin(Math.toRadians(this.getTheta())) * Math.sin(Math.toRadians(otherCoord.getTheta())) +
                 Math.cos(Math.toRadians(this.getTheta())) * Math.cos(Math.toRadians(otherCoord.getTheta())) * Math.cos((Math.toRadians(this.getPhi() - otherCoord.getPhi())))));
         return centralAngle; //should be rounded properly on a 64 bit double.
@@ -79,6 +90,7 @@ public class SphericCoordinate extends AbstractCoordinate{
     }
 
     public void setRadius(double radius) {
+        assertValidDouble(radius);
         this.radius = radius;
     }
 
@@ -87,6 +99,7 @@ public class SphericCoordinate extends AbstractCoordinate{
     }
 
     public void setTheta(double theta) {
+        assertValidDouble(theta);
         this.theta = theta;
     }
 
@@ -95,8 +108,22 @@ public class SphericCoordinate extends AbstractCoordinate{
     }
 
     public void setPhi(double phi) {
+        assertValidDouble(phi);
         this.phi = phi;
     }
 
+    @Override
+    protected void assertClassInvariants() {
+        assertValidDouble(radius);
+        assertValidDouble(phi);
+        assertValidDouble(theta);
 
-}
+        assertGreaterEqualZero(radius); //radius cannot be negative
+
+        assertGreaterZero(theta);
+        assert (theta <= Math.PI) : "theta should be less or equal to Pi radians";
+
+        assertGreaterZero(phi);
+        assert (phi <= 2 * Math.PI) : "phi should be less or equal to 2*Pi radians";
+    }
+    }

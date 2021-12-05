@@ -17,11 +17,11 @@ public class CartesianCoordinateTest {
     @Before
     public void initCoordinates() {
         firstCoord = new CartesianCoordinate(2,2,2);
-        secondCoord = new CartesianCoordinate(5,5,7);
+        secondCoord = new CartesianCoordinate(5,3,6);
         emptyCoord = new CartesianCoordinate();
         fakeCoord = new Object();
-        sphericCoord = new SphericCoordinate(5,5,7);
-        res1 = Math.sqrt(Math.pow((5-2),2)+Math.pow((5-2),2)+Math.pow((7-2),2));
+        sphericCoord = new SphericCoordinate(5,3,6);
+        res1 = Math.sqrt(Math.pow((5-2),2)+Math.pow((3-2),2)+Math.pow((6-2),2));
         res2 = Math.sqrt(Math.pow(2,2)+Math.pow(2,2)+Math.pow(2,2));
         // all of this is just really stupid...
     }
@@ -70,9 +70,9 @@ public class CartesianCoordinateTest {
         CartesianCoordinate temp;
         temp = sphericCoord.asCartesianCoordinate();
         assertTrue(temp instanceof CartesianCoordinate);
-        assertEquals(Math.abs(temp.getX()),3.6,0.1);
-        assertEquals(Math.abs(temp.getY()),3.15,0.1);
-        assertEquals(Math.abs(temp.getZ()),1.41,0.1);
+        assertEquals(Math.abs(temp.getX()),0.67749619295,0.1);
+        assertEquals(Math.abs(temp.getY()),0.1971555867,0.1);
+        assertEquals(Math.abs(temp.getZ()),4.94996248,0.1);
     }
     @Test
     public void TesttoCartesian(){
@@ -84,4 +84,20 @@ public class CartesianCoordinateTest {
     public void testSuper(){
         assertTrue(firstCoord.getClass().getSuperclass()==AbstractCoordinate.class);
     }
+
+    @Test(expected = NullPointerException.class)
+    public void testNullCoord() throws NullPointerException {
+        Coordinate testCoord = null;
+        firstCoord.equals(testCoord);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testNaNCoordinate(){
+        firstCoord.setX(Double.NaN);
+    }
+    @Test(expected = IllegalArgumentException.class)
+    public void testFalseCoordinate(){
+
+    }
+
 }

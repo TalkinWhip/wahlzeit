@@ -77,6 +77,14 @@ public class CartesianCoordinate extends AbstractCoordinate {
             return false;
         }
     }
+
+    protected double doGetCartesianDistance(CartesianCoordinate otherCoordinate){
+        double powX = Math.pow((this.getX()-otherCoordinate.getX()),2);
+        double powY = Math.pow((this.getY()-otherCoordinate.getY()),2);
+        double powZ = Math.pow((this.getZ()-otherCoordinate.getZ()),2);
+        double distance = Math.sqrt(powX+powY+powZ);
+        return distance;
+    }
     public int hashCode() {
         return Objects.hash(x,y,z);
     }

@@ -63,6 +63,12 @@ public class SphericCoordinate extends AbstractCoordinate{
             return false;
         }
     }
+
+    protected double doGetCentralAngle(SphericCoordinate otherCoord){
+        double centralAngle = Math.toDegrees(Math.acos(Math.sin(Math.toRadians(this.getTheta())) * Math.sin(Math.toRadians(otherCoord.getTheta())) +
+                Math.cos(Math.toRadians(this.getTheta())) * Math.cos(Math.toRadians(otherCoord.getTheta())) * Math.cos((Math.toRadians(this.getPhi() - otherCoord.getPhi())))));
+        return centralAngle; //should be rounded properly on a 64 bit double.
+    }
     public int hashCode() {
         return Objects.hash(getRadius(), getTheta(), getPhi());
     }

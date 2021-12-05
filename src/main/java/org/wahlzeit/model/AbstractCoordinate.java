@@ -13,20 +13,13 @@ public abstract class AbstractCoordinate implements Coordinate {
     public double getCartesianDistance(Coordinate coordinate){
         CartesianCoordinate thisCoordinate = this.asCartesianCoordinate(); // both Coordinates needed to be forced to cartesian
         CartesianCoordinate otherCoordinate = coordinate.asCartesianCoordinate();
-
-        double powX = Math.pow((thisCoordinate.getX()-otherCoordinate.getX()),2);
-        double powY = Math.pow((thisCoordinate.getY()-otherCoordinate.getY()),2);
-        double powZ = Math.pow((thisCoordinate.getZ()-otherCoordinate.getZ()),2);
-        double distance = Math.sqrt(powX+powY+powZ);
-        return distance;
+        return thisCoordinate.doGetCartesianDistance(otherCoordinate);
     }
 
     public double getCentralAngle(Coordinate coordinate){
         SphericCoordinate thisCoord = this.asSphericCoordinate();
         SphericCoordinate otherCoord = coordinate.asSphericCoordinate();
-        double centralAngle = Math.toDegrees(Math.acos(Math.sin(Math.toRadians(thisCoord.getTheta())) * Math.sin(Math.toRadians(otherCoord.getTheta())) +
-                Math.cos(Math.toRadians(thisCoord.getTheta())) * Math.cos(Math.toRadians(otherCoord.getTheta())) * Math.cos((Math.toRadians(thisCoord.getPhi() - otherCoord.getPhi())))));
-        return centralAngle; //should be rounded properly on a 64 bit double.
+        return thisCoord.doGetCentralAngle(otherCoord);
     }
 
     public boolean equals(Object compare){

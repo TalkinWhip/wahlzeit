@@ -95,9 +95,5 @@ public class CartesianCoordinateTest {
     public void testNaNCoordinate(){
         firstCoord.setX(Double.NaN);
     }
-    @Test(expected = IllegalArgumentException.class)
-    public void testFalseCoordinate(){
-
-    }
 
 }

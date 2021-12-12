@@ -16,7 +16,7 @@ public abstract class AbstractCoordinate implements Coordinate {
             CartesianCoordinate thisCoordinate = this.asCartesianCoordinate(); // both Coordinates needed to be forced to cartesian
             CartesianCoordinate otherCoordinate = coordinate.asCartesianCoordinate();
             return thisCoordinate.doGetCartesianDistance(otherCoordinate);
-        }catch(Exception e){
+        }catch(IllegalArgumentException e){
             throw new Exception("Error while getting cartesian distance of two coordinates", e);
         }
     }

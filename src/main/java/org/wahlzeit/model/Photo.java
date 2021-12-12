@@ -190,28 +190,25 @@ public class Photo extends DataObject {
 		rset.updateInt("no_votes", noVotes);
 		rset.updateLong("creation_time", creationTime);
 		rset.updateBoolean("is_spheric", location.isSpheric());
-		if (location!=null){
-			if (!location.isSpheric()){
-				try {
-					rset.updateDouble("coord_x", location.getCoordinate().asCartesianCoordinate().getX());
-					rset.updateDouble("coord_y", location.getCoordinate().asCartesianCoordinate().getY());
-					rset.updateDouble("coord_z", location.getCoordinate().asCartesianCoordinate().getZ());
-				}catch(Exception e){
-					throw new RuntimeException("On DB-Write conversion as cartesian coordinates was unsuccessful", e);
-				}
-
-			} else {
-				try {
-					rset.updateDouble("coord_x", location.getCoordinate().asSphericCoordinate().getRadius());
-					rset.updateDouble("coord_y", location.getCoordinate().asSphericCoordinate().getTheta());
-					rset.updateDouble("coord_z", location.getCoordinate().asSphericCoordinate().getPhi());
-				}catch(Exception e){
-					throw new RuntimeException ("On DB-Write conversion as spheric coordinates was unsuccessful", e);
-				}
+		if (location == null) { throw new IllegalArgumentException("invalid location"); }
+		if (!location.isSpheric()){
+			try {
+				rset.updateDouble("coord_x", location.getCoordinate().asCartesianCoordinate().getX());
+				rset.updateDouble("coord_y", location.getCoordinate().asCartesianCoordinate().getY());
+				rset.updateDouble("coord_z", location.getCoordinate().asCartesianCoordinate().getZ());
+			}catch(Exception e){
+				throw new RuntimeException("On DB-Write conversion as cartesian coordinates was unsuccessful", e);
 			}
 
+		} else {
+			try {
+				rset.updateDouble("coord_x", location.getCoordinate().asSphericCoordinate().getRadius());
+				rset.updateDouble("coord_y", location.getCoordinate().asSphericCoordinate().getTheta());
+				rset.updateDouble("coord_z", location.getCoordinate().asSphericCoordinate().getPhi());
+			}catch(Exception e){
+				throw new RuntimeException ("On DB-Write conversion as spheric coordinates was unsuccessful", e);
+			}
 		}
-
 	}
 
 	/**
@@ -417,6 +414,7 @@ public class Photo extends DataObject {
 	 * @methodtype set
 	 */
 	public void setLocation(Location location) {
+		if (location == null) { throw new IllegalArgumentException("invalid location"); }
 		this.location = location;
 	}
 

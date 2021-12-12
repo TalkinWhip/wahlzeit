@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ZuckPhotoTest {
 @Test
-    public void testConstructor() {
+    public void testConstructor() throws Exception{
     //arrange
     int year = 2019;
     //act
@@ -23,6 +23,17 @@ public class ZuckPhotoTest {
     //assert
     assertEquals(photo.getYearOfPhoto(),year);
 }
+
+@Test(expected = Exception.class)
+    public void testConstructorInvalidOver() throws Exception{
+    int year = 2500;
+    ZuckPhoto photo = new ZuckPhoto(year);
+}
+    @Test(expected = Exception.class)
+    public void testConstructorInvalidUnder() throws Exception{
+        int year = 1899;
+        ZuckPhoto photo = new ZuckPhoto(year);
+    }
 @Test
 public void testInstance(){
     //arrange

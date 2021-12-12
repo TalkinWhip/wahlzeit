@@ -96,4 +96,9 @@ public class CartesianCoordinateTest {
         firstCoord.setX(Double.NaN);
     }
 
+    @Test(expected = Exception.class)
+    public void testCheckedExceptionsDistance() throws Exception{
+        firstCoord.getCartesianDistance(null);
+    }
+
 }

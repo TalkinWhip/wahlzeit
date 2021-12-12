@@ -9,6 +9,7 @@ public class Location {
      * @methodtype constructor
      */
     public Location(Coordinate coordinate) {
+        if (coordinate == null) { throw new IllegalArgumentException("invalid coordinate"); }
         this.coordinate = coordinate;
         setSphericFlag(coordinate);
     }
@@ -33,6 +34,7 @@ public class Location {
      * @methodtype set
      */
     public void setCoordinate(Coordinate coordinate) {
+        if (coordinate == null) { throw new IllegalArgumentException("invalid coordinate"); }
         this.coordinate = coordinate;
         setSphericFlag(coordinate);
     }
@@ -42,6 +44,7 @@ public class Location {
     }
 
     public void setSphericFlag(Coordinate coordinate){
+        if (coordinate == null) { throw new IllegalArgumentException("invalid coordinate"); }
         if (coordinate instanceof SphericCoordinate){
             this.isSpheric = true;
         } else {

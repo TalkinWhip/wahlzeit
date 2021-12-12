@@ -54,5 +54,10 @@ public class SphericCoordinateTest {
         SphericCoordinate testCoord = new SphericCoordinate(1,1,9);
     }
 
+    @Test(expected = Exception.class)
+    public void testCheckedExceptionsAngle() throws Exception{
+        firstCoord.getCentralAngle(null);
+
+    }
 }
 

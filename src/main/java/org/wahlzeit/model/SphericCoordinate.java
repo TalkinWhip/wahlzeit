@@ -9,8 +9,8 @@ public class SphericCoordinate extends AbstractCoordinate{
     private double phi; //azimuth
 
     /**
-    *
-    * @methodtype constructor
+     *
+     * @methodtype constructor
      **/
     public SphericCoordinate(double radius, double theta, double phi) {
         this.radius = radius;
@@ -144,4 +144,4 @@ public class SphericCoordinate extends AbstractCoordinate{
         assertGreaterZero(phi);
         assertLessEqual2Pi(phi); //phi should be less or equal to 2*Pi radians
     }
-    }
+}

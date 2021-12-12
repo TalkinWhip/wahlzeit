@@ -87,7 +87,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
         }
     }
 
-    protected double doGetCartesianDistance(CartesianCoordinate otherCoordinate) {
+    protected double doGetCartesianDistance(CartesianCoordinate otherCoordinate) throws Exception{
         assertNotNull(otherCoordinate);
         double powX = Math.pow((this.getX() - otherCoordinate.getX()), 2);
         double powY = Math.pow((this.getY() - otherCoordinate.getY()), 2);

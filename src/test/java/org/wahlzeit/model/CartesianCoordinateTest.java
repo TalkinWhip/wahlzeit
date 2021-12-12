@@ -27,21 +27,21 @@ public class CartesianCoordinateTest {
     }
 
     @Test
-    public void TestDistanceOne(){
+    public void TestDistanceOne() throws Exception{
         assertEquals(firstCoord.getCartesianDistance(secondCoord),res1,0.00001);
 
 
     }
     @Test
-    public void TestDistanceTwo(){
+    public void TestDistanceTwo() throws Exception{
         assertEquals(firstCoord.getCartesianDistance(emptyCoord),res2,0.00001);
     }
 
     @Test
-    public void TestisEqualOne() {
+    public void TestisEqualOne() throws Exception {
         assertFalse(firstCoord.isEqual(secondCoord));
     }
-    public void TestisEqualTwo() {
+    public void TestisEqualTwo() throws Exception {
         assertTrue(firstCoord.isEqual(firstCoord));
     }
 
@@ -62,7 +62,7 @@ public class CartesianCoordinateTest {
         assertFalse(secondCoord.equals(sphericCoord));
     }
     @Test
-    public void TestSphericisEqual(){
+    public void TestSphericisEqual() throws Exception{
         assertFalse(secondCoord.isEqual(sphericCoord));
     }
     @Test

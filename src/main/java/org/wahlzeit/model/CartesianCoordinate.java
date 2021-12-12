@@ -39,20 +39,23 @@ public class CartesianCoordinate extends AbstractCoordinate {
         return this;
     }
 
-    public SphericCoordinate asSphericCoordinate() {
+    public SphericCoordinate asSphericCoordinate() throws Exception {
         double radius;
         double theta;
         double phi;
 
         radius = Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2) + Math.pow(this.z, 2));
-        assertGreaterZero(radius); // to avoid dividing by 0
-        theta = Math.acos((this.z / (radius)));
-        if (this.x > 0) {
-            phi = Math.atan((this.y / this.x));
-        } else if (this.x < 0) {
-            phi = Math.atan((this.y / this.x)) + Math.PI;
-        } else {
-            phi = Math.PI / 2;
+        try {
+            theta = Math.acos((this.z / (radius)));
+            if (this.x > 0) {
+                phi = Math.atan((this.y / this.x));
+            } else if (this.x < 0) {
+                phi = Math.atan((this.y / this.x)) + Math.PI;
+            } else {
+                phi = Math.PI / 2;
+            }
+        }catch (Exception e){
+            throw new Exception("Error in the conversion as a Spheric Coordinate", e);
         }
 
         SphericCoordinate temp = new SphericCoordinate(radius, theta, phi);
@@ -63,24 +66,24 @@ public class CartesianCoordinate extends AbstractCoordinate {
     /**
      * @methodtype boolean-query
      */
-    public boolean isEqual(Coordinate coordinate) {
+    public boolean isEqual(Coordinate coordinate) throws Exception{
         assertNotNull(coordinate);
         assertClassInvariants();
-        if (getClass() == coordinate.getClass()) {
-            CartesianCoordinate cCoord = coordinate.asCartesianCoordinate();
-            cCoord.assertClassInvariants();
-            if (Math.abs(this.getX() - cCoord.getX()) > getDELTA() ||
-                    Math.abs(this.getY() - cCoord.getY()) > getDELTA() ||
-                    Math.abs(this.getZ() - cCoord.getZ()) > getDELTA()) {
-                return false;
+        try {
+            if (getClass() == coordinate.getClass()) {
+                CartesianCoordinate cCoord = coordinate.asCartesianCoordinate();
+                cCoord.assertClassInvariants();
+                return !(Math.abs(this.getX() - cCoord.getX()) > getDELTA()) &&
+                        !(Math.abs(this.getY() - cCoord.getY()) > getDELTA()) &&
+                        !(Math.abs(this.getZ() - cCoord.getZ()) > getDELTA());
+            } else if (coordinate instanceof SphericCoordinate) {
+                SphericCoordinate sCoord = this.asSphericCoordinate();
+                return sCoord.isEqual(coordinate);
             } else {
-                return true;
+                return false;
             }
-        } else if (coordinate instanceof SphericCoordinate) {
-            SphericCoordinate sCoord = this.asSphericCoordinate();
-            return sCoord.isEqual(coordinate);
-        } else {
-            return false;
+        }catch (Exception e){
+            throw new Exception("Error at coordinate comparison", e);
         }
     }
 

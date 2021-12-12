@@ -4,34 +4,45 @@ public abstract class AbstractCoordinate implements Coordinate {
 
     private double DELTA = 0.000001; //used similarly in both sub-classes for double comparison
 
-    public abstract boolean isEqual(Coordinate coordinate);
+    public abstract boolean isEqual(Coordinate coordinate) throws Exception;
     public abstract CartesianCoordinate asCartesianCoordinate();
-    public abstract SphericCoordinate asSphericCoordinate() throws ArithmeticException;
+    public abstract SphericCoordinate asSphericCoordinate() throws Exception;
     @Override
     public abstract int hashCode(); // subs need to implement a hashCode method, since the equals method has been preimplemented
 
-    public double getCartesianDistance(Coordinate coordinate){
+    public double getCartesianDistance(Coordinate coordinate) throws Exception{
         assertNotNull(coordinate);
-        CartesianCoordinate thisCoordinate = this.asCartesianCoordinate(); // both Coordinates needed to be forced to cartesian
-        CartesianCoordinate otherCoordinate = coordinate.asCartesianCoordinate();
-        return thisCoordinate.doGetCartesianDistance(otherCoordinate);
+        try {
+            CartesianCoordinate thisCoordinate = this.asCartesianCoordinate(); // both Coordinates needed to be forced to cartesian
+            CartesianCoordinate otherCoordinate = coordinate.asCartesianCoordinate();
+            return thisCoordinate.doGetCartesianDistance(otherCoordinate);
+        }catch(Exception e){
+            throw new Exception("Error while getting cartesian distance of two coordinates", e);
+        }
     }
 
-    public double getCentralAngle(Coordinate coordinate){
+    public double getCentralAngle(Coordinate coordinate) throws Exception{
         assertNotNull(coordinate);
-        SphericCoordinate thisCoord = this.asSphericCoordinate();
-        SphericCoordinate otherCoord = coordinate.asSphericCoordinate();
-        return thisCoord.doGetCentralAngle(otherCoord);
+        try {
+            SphericCoordinate thisCoord = this.asSphericCoordinate();
+            SphericCoordinate otherCoord = coordinate.asSphericCoordinate();
+            return thisCoord.doGetCentralAngle(otherCoord);
+        }catch (Exception e){
+            throw new Exception("Coordinate conversion was unsuccessful during getCentralAngle", e);
+        }
     }
 
     public boolean equals(Object compare){
         assertNotNull(compare);
-        if (this.getClass() == compare.getClass()) {
-            Coordinate loc = (Coordinate) compare;
-            return this.isEqual(loc);
-        }
-        else {
-            return false;
+        try {
+            if (this.getClass() == compare.getClass()) {
+                Coordinate loc = (Coordinate) compare;
+                return this.isEqual(loc);
+            } else {
+                return false;
+            }
+        }catch(Exception e){
+            throw new RuntimeException("method equals failed", e);
         }
     }
 

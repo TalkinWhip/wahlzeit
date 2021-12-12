@@ -11,7 +11,7 @@ public class SphericCoordinateTest {
     CartesianCoordinate cartCoord = new CartesianCoordinate(1,2,3);
 
     @Test
-    public void testAsSpheric(){
+    public void testAsSpheric() throws Exception{
         SphericCoordinate temp;
         temp = cartCoord.asSphericCoordinate();
         assertEquals(temp.getRadius(),3.74,0.1);
@@ -20,17 +20,17 @@ public class SphericCoordinateTest {
     }
 
     @Test
-    public void testCentralAngle(){
+    public void testCentralAngle() throws Exception{
         assertTrue(secondCoord.getCentralAngle(cartCoord.asSphericCoordinate())>0);
 
     }
     @Test
-    public void testCentralAngleWithEmpty(){
+    public void testCentralAngleWithEmpty() throws Exception{
         assertTrue(firstCoord.getCentralAngle(secondCoord)>0);
     }
 
     @Test
-    public void testCartesianDistance(){
+    public void testCartesianDistance() throws Exception{
         CartesianCoordinate temp = new CartesianCoordinate();
         assertEquals(cartCoord.getCartesianDistance(firstCoord), cartCoord.getCartesianDistance(temp),0.0001);
     }

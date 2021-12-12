@@ -52,23 +52,28 @@ public class SphericCoordinate extends AbstractCoordinate{
         return this;
     }
 
-    public boolean isEqual(Coordinate coordinate){
+    public boolean isEqual(Coordinate coordinate) throws Exception{
         assertNotNull(coordinate);
         assertClassInvariants();
-        if (getClass() == coordinate.getClass() ) {
-            SphericCoordinate sCoord = coordinate.asSphericCoordinate();
-            sCoord.assertClassInvariants();
-            if (Math.abs(this.getRadius() - sCoord.getRadius())>getDELTA() ||
-                    Math.abs(this.getTheta() - sCoord.getTheta())>getDELTA() ||
-                    Math.abs(this.getPhi() - sCoord.getPhi())>getDELTA()){
+        try {
+            if (getClass() == coordinate.getClass()) {
+                SphericCoordinate sCoord = coordinate.asSphericCoordinate();
+                sCoord.assertClassInvariants();
+                if (Math.abs(this.getRadius() - sCoord.getRadius()) > getDELTA() ||
+                        Math.abs(this.getTheta() - sCoord.getTheta()) > getDELTA() ||
+                        Math.abs(this.getPhi() - sCoord.getPhi()) > getDELTA()) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else if (coordinate instanceof CartesianCoordinate) {
+                CartesianCoordinate cCoord = this.asCartesianCoordinate();
+                return cCoord.isEqual(coordinate);
+            } else {
                 return false;
             }
-            else { return true; }
-        } else if (coordinate instanceof CartesianCoordinate){
-            CartesianCoordinate cCoord = this.asCartesianCoordinate();
-            return cCoord.isEqual(coordinate);
-        } else {
-            return false;
+        }catch(Exception e){
+            throw new Exception("Error at coordinate comparison", e);
         }
     }
 

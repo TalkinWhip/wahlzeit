@@ -192,13 +192,22 @@ public class Photo extends DataObject {
 		rset.updateBoolean("is_spheric", location.isSpheric());
 		if (location!=null){
 			if (!location.isSpheric()){
-				rset.updateDouble("coord_x", location.getCoordinate().asCartesianCoordinate().getX());
-				rset.updateDouble("coord_y", location.getCoordinate().asCartesianCoordinate().getY());
-				rset.updateDouble("coord_z", location.getCoordinate().asCartesianCoordinate().getZ());
+				try {
+					rset.updateDouble("coord_x", location.getCoordinate().asCartesianCoordinate().getX());
+					rset.updateDouble("coord_y", location.getCoordinate().asCartesianCoordinate().getY());
+					rset.updateDouble("coord_z", location.getCoordinate().asCartesianCoordinate().getZ());
+				}catch(Exception e){
+					throw new RuntimeException("On DB-Write conversion as cartesian coordinates was unsuccessful", e);
+				}
+
 			} else {
-				rset.updateDouble("coord_x", location.getCoordinate().asSphericCoordinate().getRadius());
-				rset.updateDouble("coord_y", location.getCoordinate().asSphericCoordinate().getTheta());
-				rset.updateDouble("coord_z", location.getCoordinate().asSphericCoordinate().getPhi());
+				try {
+					rset.updateDouble("coord_x", location.getCoordinate().asSphericCoordinate().getRadius());
+					rset.updateDouble("coord_y", location.getCoordinate().asSphericCoordinate().getTheta());
+					rset.updateDouble("coord_z", location.getCoordinate().asSphericCoordinate().getPhi());
+				}catch(Exception e){
+					throw new RuntimeException ("On DB-Write conversion as spheric coordinates was unsuccessful", e);
+				}
 			}
 
 		}

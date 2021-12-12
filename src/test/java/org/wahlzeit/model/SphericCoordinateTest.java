@@ -49,7 +49,7 @@ public class SphericCoordinateTest {
     public void testNaNCoordinate(){
         firstCoord.setPhi(Double.NaN);
     }
-    @Test(expected = AssertionError.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testFalseCoordinate(){
         SphericCoordinate testCoord = new SphericCoordinate(1,1,9);
     }

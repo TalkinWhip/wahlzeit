@@ -78,6 +78,8 @@ public class SphericCoordinate extends AbstractCoordinate{
 
         double centralAngle = Math.toDegrees(Math.acos(Math.sin(Math.toRadians(this.getTheta())) * Math.sin(Math.toRadians(otherCoord.getTheta())) +
                 Math.cos(Math.toRadians(this.getTheta())) * Math.cos(Math.toRadians(otherCoord.getTheta())) * Math.cos((Math.toRadians(this.getPhi() - otherCoord.getPhi())))));
+        assertLessEqual2Pi(centralAngle);
+        assertGreaterZero(centralAngle);
         return centralAngle; //should be rounded properly on a 64 bit double.
     }
     public int hashCode() {
@@ -112,6 +114,17 @@ public class SphericCoordinate extends AbstractCoordinate{
         this.phi = phi;
     }
 
+    protected void assertLessEqualPi(double x){
+        if (x > Math.PI){
+            throw new IllegalArgumentException ("Parameter " + x + " should not be greater than Pi");
+        }
+    }
+    protected void assertLessEqual2Pi(double x){
+        if (x > 2 * Math.PI){
+            throw new IllegalArgumentException("Parameter " + x + " should not be greater than 2 * Pi");
+        }
+    }
+
     @Override
     protected void assertClassInvariants() {
         assertValidDouble(radius);
@@ -121,9 +134,9 @@ public class SphericCoordinate extends AbstractCoordinate{
         assertGreaterEqualZero(radius); //radius cannot be negative
 
         assertGreaterZero(theta);
-        assert (theta <= Math.PI) : "theta should be less or equal to Pi radians";
+        assertLessEqualPi(theta);
 
         assertGreaterZero(phi);
-        assert (phi <= 2 * Math.PI) : "phi should be less or equal to 2*Pi radians";
+        assertLessEqual2Pi(phi); //phi should be less or equal to 2*Pi radians
     }
     }

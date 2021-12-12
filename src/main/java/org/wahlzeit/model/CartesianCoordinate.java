@@ -90,6 +90,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
         double powY = Math.pow((this.getY() - otherCoordinate.getY()), 2);
         double powZ = Math.pow((this.getZ() - otherCoordinate.getZ()), 2);
         double distance = Math.sqrt(powX + powY + powZ);
+        assertGreaterZero(distance);
         return distance;
     }
 

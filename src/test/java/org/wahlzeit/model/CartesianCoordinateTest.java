@@ -17,10 +17,10 @@ public class CartesianCoordinateTest {
     @Before
     public void initCoordinates() {
         firstCoord = CartesianCoordinate.fetchCartesianCoordinate(2,2,2);
-        secondCoord = CartesianCoordinate.fetchCartesianCoordinate(5,3,4);
+        secondCoord = CartesianCoordinate.fetchCartesianCoordinate(5,3,6);
         emptyCoord = CartesianCoordinate.fetchCartesianCoordinate();
         fakeCoord = new Object();
-        //sphericCoord = SphericCoordinate.fetchSphericCoordinate(5,3,4);
+        sphericCoord = SphericCoordinate.fetchSphericCoordinate(5,3,6);
         res1 = Math.sqrt(Math.pow((5-2),2)+Math.pow((3-2),2)+Math.pow((6-2),2));
         res2 = Math.sqrt(Math.pow(2,2)+Math.pow(2,2)+Math.pow(2,2));
         // all of this is just really stupid...
@@ -91,10 +91,10 @@ public class CartesianCoordinateTest {
         firstCoord.equals(testCoord);
     }
 
- /*   @Test(expected = IllegalArgumentException.class)
+@Test(expected = RuntimeException.class)
     public void testNaNCoordinate(){
-        firstCoord.setX(Double.NaN);
-    } */
+        CartesianCoordinate nanCoord = CartesianCoordinate.fetchCartesianCoordinate(1,1,Double.NaN);
+    }
 
     @Test(expected = Exception.class)
     public void testCheckedExceptionsDistance() throws Exception{
@@ -105,13 +105,10 @@ public class CartesianCoordinateTest {
     public void testSharing() throws Exception{
         CartesianCoordinate newEmptyCoord = CartesianCoordinate.fetchCartesianCoordinate();
         int hc = emptyCoord.hashCode();
-        System.out.println(AbstractCoordinate.existingCoordinates.get(hc));
+        System.out.println(CartesianCoordinate.existingCartesianCoordinates.get(hc));
         assertTrue(emptyCoord == newEmptyCoord);
         int new_hc = newEmptyCoord.hashCode();
         assertTrue(hc==new_hc);
-
-        System.out.println(firstCoord.getX());
-        System.out.println(firstCoord.asSphericCoordinate().getPhi());
 
     }
 }

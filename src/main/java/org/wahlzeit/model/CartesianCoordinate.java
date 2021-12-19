@@ -1,5 +1,6 @@
 package org.wahlzeit.model;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class CartesianCoordinate extends AbstractCoordinate {
@@ -7,6 +8,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
     private final double y;
     private final double z;
 
+    public static HashMap<Integer, CartesianCoordinate> existingCartesianCoordinates = new HashMap<>();
 
     /**
      * if the coordinate exists in hashmap, fetch it, otherwise create and store a new one
@@ -17,10 +19,10 @@ public class CartesianCoordinate extends AbstractCoordinate {
         try{
             CartesianCoordinate instance = new CartesianCoordinate(x,y,z);
             int hash = instance.hashCode();
-            if (AbstractCoordinate.existingCoordinates.containsKey(hash)){
-                return AbstractCoordinate.existingCoordinates.get(hash).asCartesianCoordinate();
+            if (existingCartesianCoordinates.containsKey(hash)){
+                return existingCartesianCoordinates.get(hash);
             }else{
-                AbstractCoordinate.existingCoordinates.put(hash,instance);
+                existingCartesianCoordinates.put(hash,instance);
                 return instance;
             }
         }catch(Exception e){

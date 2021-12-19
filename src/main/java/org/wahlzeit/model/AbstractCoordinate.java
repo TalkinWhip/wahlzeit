@@ -1,6 +1,5 @@
 package org.wahlzeit.model;
 
-import java.util.HashMap;
 
 public abstract class AbstractCoordinate implements Coordinate {
 
@@ -12,7 +11,6 @@ public abstract class AbstractCoordinate implements Coordinate {
     @Override
     public abstract int hashCode(); // subs need to implement a hashCode method, since the equals method has been preimplemented
 
-    public static HashMap<Integer, Coordinate> existingCoordinates = new HashMap<>();
 
     public double getCartesianDistance(Coordinate coordinate) throws Exception{
         assertNotNull(coordinate);

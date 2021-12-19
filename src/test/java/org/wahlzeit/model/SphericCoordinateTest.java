@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 public class SphericCoordinateTest {
     SphericCoordinate firstCoord = SphericCoordinate.fetchSphericCoordinate();
     SphericCoordinate secondCoord = SphericCoordinate.fetchSphericCoordinate(1,2,3);
-    //SphericCoordinate thirdCoord = new SphericCoordinate(-100,-100,-100);
+    SphericCoordinate emptyCoord = SphericCoordinate.fetchSphericCoordinate();
     CartesianCoordinate cartCoord = CartesianCoordinate.fetchCartesianCoordinate(1,2,3);
 
     @Test
@@ -45,11 +45,12 @@ public class SphericCoordinateTest {
         firstCoord.equals(testCoord);
     }
 
-   /* @Test(expected = IllegalArgumentException.class)
+   @Test(expected = RuntimeException.class)
     public void testNaNCoordinate(){
-        firstCoord.setPhi(Double.NaN);
-    }*/
-    @Test(expected = IllegalArgumentException.class)
+        SphericCoordinate nanCoord = SphericCoordinate.fetchSphericCoordinate(1,1,Double.NaN);
+
+    }
+    @Test(expected = Exception.class)
     public void testFalseCoordinate(){
         SphericCoordinate testCoord = SphericCoordinate.fetchSphericCoordinate(1,1,9);
     }
@@ -57,6 +58,16 @@ public class SphericCoordinateTest {
     @Test(expected = Exception.class)
     public void testCheckedExceptionsAngle() throws Exception{
         firstCoord.getCentralAngle(null);
+
+    }
+
+    @Test
+    public void testSharing() throws Exception{
+        SphericCoordinate newEmptyCoord = SphericCoordinate.fetchSphericCoordinate();
+        int hc = emptyCoord.hashCode();
+        assertTrue(emptyCoord == newEmptyCoord);
+        int new_hc = newEmptyCoord.hashCode();
+        assertTrue(hc==new_hc);
 
     }
 }

@@ -1,5 +1,6 @@
 package org.wahlzeit.model;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class SphericCoordinate extends AbstractCoordinate{
@@ -8,7 +9,7 @@ public class SphericCoordinate extends AbstractCoordinate{
     private final double theta; //angle
     private final double phi; //azimuth
 
-
+    public static HashMap<Integer, SphericCoordinate> existingSphericCoordinates = new HashMap<>();
     /**
      * if the coordinate exists in hashmap, fetch it, otherwise create and store a new one
      * #TODO: test if instance gets stored as a Spheric and if that's an issue???
@@ -18,10 +19,10 @@ public class SphericCoordinate extends AbstractCoordinate{
         try{
             SphericCoordinate instance = new SphericCoordinate(radius,theta,phi);
             int hash = instance.hashCode();
-            if (AbstractCoordinate.existingCoordinates.containsKey(hash)){
-                return AbstractCoordinate.existingCoordinates.get(hash).asSphericCoordinate();
+            if (existingSphericCoordinates.containsKey(hash)){
+                return existingSphericCoordinates.get(hash);
             }else{
-                AbstractCoordinate.existingCoordinates.put(hash,instance);
+                existingSphericCoordinates.put(hash,instance);
                 return instance;
             }
         }catch(Exception e){

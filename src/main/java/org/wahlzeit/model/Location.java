@@ -20,7 +20,7 @@ public class Location {
      */
     //convenience constructor
     public Location() {
-        this.coordinate = new CartesianCoordinate();
+        this.coordinate = CartesianCoordinate.fetchCartesianCoordinate();
     }
     /**
      *

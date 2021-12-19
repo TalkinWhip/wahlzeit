@@ -4,32 +4,50 @@ import java.util.Objects;
 
 public class SphericCoordinate extends AbstractCoordinate{
 
-    private double radius; // radius from origin to point
-    private double theta; //angle
-    private double phi; //azimuth
+    private final double radius; // radius from origin to point
+    private final double theta; //angle
+    private final double phi; //azimuth
+
+
+    /**
+     * if the coordinate exists in hashmap, fetch it, otherwise create and store a new one
+     * #TODO: test if instance gets stored as a Spheric and if that's an issue???
+     */
+    public static SphericCoordinate fetchSphericCoordinate(double radius, double theta, double phi){
+
+        try{
+            SphericCoordinate instance = new SphericCoordinate(radius,theta,phi);
+            int hash = instance.hashCode();
+            if (AbstractCoordinate.existingCoordinates.containsKey(hash)){
+                return AbstractCoordinate.existingCoordinates.get(hash).asSphericCoordinate();
+            }else{
+                AbstractCoordinate.existingCoordinates.put(hash,instance);
+                return instance;
+            }
+        }catch(Exception e){
+            throw new RuntimeException("Spheric Coordinate could not be fetched",e);
+        }
+
+    }
+
+    /**
+     * convenience fetcher
+     *
+     */
+    public static SphericCoordinate fetchSphericCoordinate() {
+        return fetchSphericCoordinate(0,0,0);
+    }
 
     /**
      *
      * @methodtype constructor
      **/
-    public SphericCoordinate(double radius, double theta, double phi) {
+    private SphericCoordinate(double radius, double theta, double phi) {
         this.radius = radius;
         this.theta = theta;
         this.phi = phi;
         assertClassInvariants(); //at the end, otherwise would have to check them one by one as preconditions and I decided this is sufficient.
     }
-    /**
-     *
-     * @methodtype constructor
-     * @methodproperty convenience
-     **/
-    public SphericCoordinate(){
-        this.radius = 0;
-        this.theta = 0;
-        this.phi = 0;
-    }
-
-
 
     public CartesianCoordinate asCartesianCoordinate(){
 
@@ -43,7 +61,7 @@ public class SphericCoordinate extends AbstractCoordinate{
         y = this.radius * Math.sin(this.phi) * Math.sin(this.theta);
         z = this.radius * Math.cos(this.theta);
 
-        CartesianCoordinate temp = new CartesianCoordinate(x,y,z);
+        CartesianCoordinate temp = CartesianCoordinate.fetchCartesianCoordinate(x,y,z);
         temp.assertClassInvariants();
         return temp;
 
@@ -88,7 +106,7 @@ public class SphericCoordinate extends AbstractCoordinate{
         return centralAngle; //should be rounded properly on a 64 bit double.
     }
     public int hashCode() {
-        return Objects.hash(getRadius(), getTheta(), getPhi());
+        return this.asCartesianCoordinate().hashCode();
     }
 
 
@@ -96,27 +114,12 @@ public class SphericCoordinate extends AbstractCoordinate{
         return radius;
     }
 
-    public void setRadius(double radius) {
-        assertValidDouble(radius);
-        this.radius = radius;
-    }
-
     public double getTheta() {
         return theta;
     }
 
-    public void setTheta(double theta) {
-        assertValidDouble(theta);
-        this.theta = theta;
-    }
-
     public double getPhi() {
         return phi;
-    }
-
-    public void setPhi(double phi) {
-        assertValidDouble(phi);
-        this.phi = phi;
     }
 
     protected void assertLessEqualPi(double x){

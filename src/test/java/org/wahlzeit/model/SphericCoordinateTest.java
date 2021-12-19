@@ -5,10 +5,10 @@ import net.bytebuddy.pool.TypePool;
 import org.junit.Test;
 import static org.junit.Assert.*;
 public class SphericCoordinateTest {
-    SphericCoordinate firstCoord = new SphericCoordinate();
-    SphericCoordinate secondCoord = new SphericCoordinate(1,2,3);
+    SphericCoordinate firstCoord = SphericCoordinate.fetchSphericCoordinate();
+    SphericCoordinate secondCoord = SphericCoordinate.fetchSphericCoordinate(1,2,3);
     //SphericCoordinate thirdCoord = new SphericCoordinate(-100,-100,-100);
-    CartesianCoordinate cartCoord = new CartesianCoordinate(1,2,3);
+    CartesianCoordinate cartCoord = CartesianCoordinate.fetchCartesianCoordinate(1,2,3);
 
     @Test
     public void testAsSpheric() throws Exception{
@@ -31,7 +31,7 @@ public class SphericCoordinateTest {
 
     @Test
     public void testCartesianDistance() throws Exception{
-        CartesianCoordinate temp = new CartesianCoordinate();
+        CartesianCoordinate temp = CartesianCoordinate.fetchCartesianCoordinate();
         assertEquals(cartCoord.getCartesianDistance(firstCoord), cartCoord.getCartesianDistance(temp),0.0001);
     }
 
@@ -45,13 +45,13 @@ public class SphericCoordinateTest {
         firstCoord.equals(testCoord);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+   /* @Test(expected = IllegalArgumentException.class)
     public void testNaNCoordinate(){
         firstCoord.setPhi(Double.NaN);
-    }
+    }*/
     @Test(expected = IllegalArgumentException.class)
     public void testFalseCoordinate(){
-        SphericCoordinate testCoord = new SphericCoordinate(1,1,9);
+        SphericCoordinate testCoord = SphericCoordinate.fetchSphericCoordinate(1,1,9);
     }
 
     @Test(expected = Exception.class)

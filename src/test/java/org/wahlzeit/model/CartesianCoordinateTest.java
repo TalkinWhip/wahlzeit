@@ -16,11 +16,11 @@ public class CartesianCoordinateTest {
 
     @Before
     public void initCoordinates() {
-        firstCoord = new CartesianCoordinate(2,2,2);
-        secondCoord = new CartesianCoordinate(5,3,6);
-        emptyCoord = new CartesianCoordinate();
+        firstCoord = CartesianCoordinate.fetchCartesianCoordinate(2,2,2);
+        secondCoord = CartesianCoordinate.fetchCartesianCoordinate(5,3,4);
+        emptyCoord = CartesianCoordinate.fetchCartesianCoordinate();
         fakeCoord = new Object();
-        sphericCoord = new SphericCoordinate(5,3,6);
+        //sphericCoord = SphericCoordinate.fetchSphericCoordinate(5,3,4);
         res1 = Math.sqrt(Math.pow((5-2),2)+Math.pow((3-2),2)+Math.pow((6-2),2));
         res2 = Math.sqrt(Math.pow(2,2)+Math.pow(2,2)+Math.pow(2,2));
         // all of this is just really stupid...
@@ -75,7 +75,7 @@ public class CartesianCoordinateTest {
         assertEquals(Math.abs(temp.getZ()),4.94996248,0.1);
     }
     @Test
-    public void TesttoCartesian(){
+    public void TestToCartesian(){
         CartesianCoordinate temp;
         temp = firstCoord.asCartesianCoordinate();
         assertTrue(temp instanceof CartesianCoordinate);
@@ -91,14 +91,27 @@ public class CartesianCoordinateTest {
         firstCoord.equals(testCoord);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+ /*   @Test(expected = IllegalArgumentException.class)
     public void testNaNCoordinate(){
         firstCoord.setX(Double.NaN);
-    }
+    } */
 
     @Test(expected = Exception.class)
     public void testCheckedExceptionsDistance() throws Exception{
         firstCoord.getCartesianDistance(null);
     }
 
+    @Test
+    public void testSharing() throws Exception{
+        CartesianCoordinate newEmptyCoord = CartesianCoordinate.fetchCartesianCoordinate();
+        int hc = emptyCoord.hashCode();
+        System.out.println(AbstractCoordinate.existingCoordinates.get(hc));
+        assertTrue(emptyCoord == newEmptyCoord);
+        int new_hc = newEmptyCoord.hashCode();
+        assertTrue(hc==new_hc);
+
+        System.out.println(firstCoord.getX());
+        System.out.println(firstCoord.asSphericCoordinate().getPhi());
+
+    }
 }

@@ -1,5 +1,7 @@
 package org.wahlzeit.model;
 
+import java.util.HashMap;
+
 public abstract class AbstractCoordinate implements Coordinate {
 
     private double DELTA = 0.000001; //used similarly in both sub-classes for double comparison
@@ -9,6 +11,8 @@ public abstract class AbstractCoordinate implements Coordinate {
     public abstract SphericCoordinate asSphericCoordinate() throws Exception;
     @Override
     public abstract int hashCode(); // subs need to implement a hashCode method, since the equals method has been preimplemented
+
+    public static HashMap<Integer, Coordinate> existingCoordinates = new HashMap<>();
 
     public double getCartesianDistance(Coordinate coordinate) throws Exception{
         assertNotNull(coordinate);
@@ -66,6 +70,7 @@ public abstract class AbstractCoordinate implements Coordinate {
             throw new IllegalArgumentException("Parameter "+ x +" should be greater or equal to zero");
         }
     }
+    // made method below static, so I can use it in the fetch methods. I don't think this will be an issue.
     protected void assertValidDouble(double x){
         if (Double.isNaN(x)){
             throw new IllegalArgumentException("Parameter is invalid");

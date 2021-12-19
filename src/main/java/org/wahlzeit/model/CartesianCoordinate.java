@@ -3,14 +3,45 @@ package org.wahlzeit.model;
 import java.util.Objects;
 
 public class CartesianCoordinate extends AbstractCoordinate {
-    private double x;
-    private double y;
-    private double z;
+    private final double x;
+    private final double y;
+    private final double z;
+
+
+    /**
+     * if the coordinate exists in hashmap, fetch it, otherwise create and store a new one
+     * #TODO: test if instance gets stored as a Cartesian and if that's an issue???
+     */
+    public static CartesianCoordinate fetchCartesianCoordinate(double x, double y, double z){
+
+        try{
+            CartesianCoordinate instance = new CartesianCoordinate(x,y,z);
+            int hash = instance.hashCode();
+            if (AbstractCoordinate.existingCoordinates.containsKey(hash)){
+                return AbstractCoordinate.existingCoordinates.get(hash).asCartesianCoordinate();
+            }else{
+                AbstractCoordinate.existingCoordinates.put(hash,instance);
+                return instance;
+            }
+        }catch(Exception e){
+            throw new RuntimeException("Cartesian Coordinate could not be fetched",e);
+        }
+
+    }
+
+    /**
+     * convenience fetcher
+     *
+     */
+    public static CartesianCoordinate fetchCartesianCoordinate() {
+        return fetchCartesianCoordinate(0,0,0);
+    }
 
     /**
      * @methodtype constructor
+     * private --> immutable value object
      */
-    public CartesianCoordinate(double x, double y, double z) {
+    private CartesianCoordinate(double x, double y, double z) {
         assertValidDouble(x);
         assertValidDouble(y);
         assertValidDouble(z);
@@ -18,17 +49,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
         this.y = y;
         this.z = z;
         assertClassInvariants();
-    }
-
-    /**
-     * @methodtype constructor
-     * @methodproperty convenience
-     */
-    // alternative constructor, since location has 0..1 multiplicity
-    public CartesianCoordinate() {
-        this.x = 0;
-        this.y = 0;
-        this.z = 0;
     }
 
     /**
@@ -54,13 +74,12 @@ public class CartesianCoordinate extends AbstractCoordinate {
             } else {
                 phi = Math.PI / 2;
             }
+            SphericCoordinate temp = SphericCoordinate.fetchSphericCoordinate(radius, theta, phi);
+            temp.assertClassInvariants();
+            return temp;
         }catch (Exception e){
             throw new Exception("Error in the conversion as a Spheric Coordinate", e);
         }
-
-        SphericCoordinate temp = new SphericCoordinate(radius, theta, phi);
-        temp.assertClassInvariants();
-        return temp;
     }
 
     /**
@@ -120,30 +139,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
      */
     public double getZ() {
         return z;
-    }
-
-    /**
-     * @methodtype set
-     */
-    public void setX(double x) {
-        assertValidDouble(x);
-        this.x = x;
-    }
-
-    /**
-     * @methodtype set
-     */
-    public void setY(double y) {
-        assertValidDouble(y);
-        this.y = y;
-    }
-
-    /**
-     * @methodtype set
-     */
-    public void setZ(double z) {
-        assertValidDouble(z);
-        this.z = z;
     }
 
     @Override

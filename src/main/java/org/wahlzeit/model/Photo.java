@@ -164,9 +164,9 @@ public class Photo extends DataObject {
 		double z = rset.getDouble("coord_z");
 
 		if (isSpheric){
-			location = new Location(new SphericCoordinate(x,y,z));
+			location = new Location(SphericCoordinate.fetchSphericCoordinate(x,y,z));
 		} else {
-			location = new Location(new CartesianCoordinate(x,y,z));
+			location = new Location(CartesianCoordinate.fetchCartesianCoordinate(x,y,z));
 		}
 
 	}

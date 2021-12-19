@@ -11,8 +11,8 @@ import java.sql.SQLException;
 import static org.junit.Assert.*;
 public class PhotoTest {
     private Photo photo;
-    private Location testCartLocation = new Location(new CartesianCoordinate(1,2,3));
-    private Location testSphLocation = new Location(new SphericCoordinate(1,2,3));
+    private Location testCartLocation = new Location(CartesianCoordinate.fetchCartesianCoordinate(1,2,3));
+    private Location testSphLocation = new Location(SphericCoordinate.fetchSphericCoordinate(1,2,3));
     private ResultSet rset = Mockito.mock(ResultSet.class);
     URL ownerHomePage;
 

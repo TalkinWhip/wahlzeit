@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.time.Year;
 
 @PatternInstance(
-        patternName = "AbstractFactory"
-        participands = { "ConcreteProduct" }
+        patternName = "AbstractFactory",
+        participants = { "ConcreteProduct" }
 )
 public class ZuckPhoto extends Photo{
 

@@ -1,5 +1,12 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.utils.PatternInstance;
+
+@PatternInstance(
+        patternName = "Bridge",
+        participants = { "Abstraction" }
+)
+
 public interface Coordinate {
     public CartesianCoordinate asCartesianCoordinate() throws Exception;
     public SphericCoordinate asSphericCoordinate() throws Exception;

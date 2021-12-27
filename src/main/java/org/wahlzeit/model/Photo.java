@@ -14,6 +14,10 @@ import org.wahlzeit.utils.*;
 /**
  * A photo represents a user-provided (uploaded) photo.
  */
+@PatternInstance(
+		patternName = "AbstractFactory"
+		participands = { "AbstractProduct" }
+)
 public class Photo extends DataObject {
 
 	/**
@@ -164,9 +168,9 @@ public class Photo extends DataObject {
 		double z = rset.getDouble("coord_z");
 
 		if (isSpheric){
-			location = new Location(SphericCoordinate.fetchSphericCoordinate(x,y,z));
+			location = new Location(SphericCoordinate.ensureSphericCoordinate(x,y,z));
 		} else {
-			location = new Location(CartesianCoordinate.fetchCartesianCoordinate(x,y,z));
+			location = new Location(CartesianCoordinate.ensureCartesianCoordinate(x,y,z));
 		}
 
 	}

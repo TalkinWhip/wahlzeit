@@ -1,9 +1,15 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.utils.PatternInstance;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Year;
 
+@PatternInstance(
+        patternName = "AbstractFactory"
+        participands = { "ConcreteProduct" }
+)
 public class ZuckPhoto extends Photo{
 
     private int yearOfPhoto;

@@ -1,7 +1,14 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.utils.PatternInstance;
+
 import java.util.HashMap;
-import java.util.Objects;
+
+
+@PatternInstance(
+        patternName = "Bridge",
+        participants = { "ConcreteImplementorB" }
+)
 
 public class SphericCoordinate extends AbstractCoordinate{
 
@@ -12,9 +19,13 @@ public class SphericCoordinate extends AbstractCoordinate{
     public static HashMap<Integer, SphericCoordinate> existingSphericCoordinates = new HashMap<>();
     /**
      * if the coordinate exists in hashmap, fetch it, otherwise create and store a new one
-     * #TODO: test if instance gets stored as a Spheric and if that's an issue???
+     * 
      */
-    public static SphericCoordinate fetchSphericCoordinate(double radius, double theta, double phi){
+    @PatternInstance(
+            patternName = "Flyweight",
+            participants = { "FlyweightFactory", "Flyweight" }
+    )
+    public static synchronized SphericCoordinate ensureSphericCoordinate(double radius, double theta, double phi){
 
         try{
             SphericCoordinate instance = new SphericCoordinate(radius,theta,phi);
@@ -35,8 +46,8 @@ public class SphericCoordinate extends AbstractCoordinate{
      * convenience fetcher
      *
      */
-    public static SphericCoordinate fetchSphericCoordinate() {
-        return fetchSphericCoordinate(0,0,0);
+    public static SphericCoordinate ensureSphericCoordinate() {
+        return ensureSphericCoordinate(0,0,0);
     }
 
     /**
@@ -62,7 +73,7 @@ public class SphericCoordinate extends AbstractCoordinate{
         y = this.radius * Math.sin(this.phi) * Math.sin(this.theta);
         z = this.radius * Math.cos(this.theta);
 
-        CartesianCoordinate temp = CartesianCoordinate.fetchCartesianCoordinate(x,y,z);
+        CartesianCoordinate temp = CartesianCoordinate.ensureCartesianCoordinate(x,y,z);
         temp.assertClassInvariants();
         return temp;
 
@@ -96,6 +107,10 @@ public class SphericCoordinate extends AbstractCoordinate{
         }
     }
 
+    @PatternInstance(
+            patternName = "Template Method",
+            participants = { "Concrete Class - Primitive Operation" }
+    )
     protected double doGetCentralAngle(SphericCoordinate otherCoord){
         assertClassInvariants();
         otherCoord.assertClassInvariants();

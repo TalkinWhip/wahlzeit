@@ -16,11 +16,11 @@ public class CartesianCoordinateTest {
 
     @Before
     public void initCoordinates() {
-        firstCoord = CartesianCoordinate.fetchCartesianCoordinate(2,2,2);
-        secondCoord = CartesianCoordinate.fetchCartesianCoordinate(5,3,6);
-        emptyCoord = CartesianCoordinate.fetchCartesianCoordinate();
+        firstCoord = CartesianCoordinate.ensureCartesianCoordinate(2,2,2);
+        secondCoord = CartesianCoordinate.ensureCartesianCoordinate(5,3,6);
+        emptyCoord = CartesianCoordinate.ensureCartesianCoordinate();
         fakeCoord = new Object();
-        sphericCoord = SphericCoordinate.fetchSphericCoordinate(5,3,6);
+        sphericCoord = SphericCoordinate.ensureSphericCoordinate(5,3,6);
         res1 = Math.sqrt(Math.pow((5-2),2)+Math.pow((3-2),2)+Math.pow((6-2),2));
         res2 = Math.sqrt(Math.pow(2,2)+Math.pow(2,2)+Math.pow(2,2));
         // all of this is just really stupid...
@@ -93,7 +93,7 @@ public class CartesianCoordinateTest {
 
 @Test(expected = RuntimeException.class)
     public void testNaNCoordinate(){
-        CartesianCoordinate nanCoord = CartesianCoordinate.fetchCartesianCoordinate(1,1,Double.NaN);
+        CartesianCoordinate nanCoord = CartesianCoordinate.ensureCartesianCoordinate(1,1,Double.NaN);
     }
 
     @Test(expected = Exception.class)
@@ -103,7 +103,7 @@ public class CartesianCoordinateTest {
 
     @Test
     public void testSharing() throws Exception{
-        CartesianCoordinate newEmptyCoord = CartesianCoordinate.fetchCartesianCoordinate();
+        CartesianCoordinate newEmptyCoord = CartesianCoordinate.ensureCartesianCoordinate();
         int hc = emptyCoord.hashCode();
         System.out.println(CartesianCoordinate.existingCartesianCoordinates.get(hc));
         assertTrue(emptyCoord == newEmptyCoord);

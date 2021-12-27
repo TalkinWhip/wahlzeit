@@ -1,7 +1,14 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.utils.PatternInstance;
+
 import java.util.HashMap;
 import java.util.Objects;
+
+@PatternInstance(
+        patternName = "Bridge",
+        participants = { "ConcreteImplementorA" }
+)
 
 public class CartesianCoordinate extends AbstractCoordinate {
     private final double x;
@@ -14,7 +21,11 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * if the coordinate exists in hashmap, fetch it, otherwise create and store a new one
      * #TODO: test if instance gets stored as a Cartesian and if that's an issue???
      */
-    public static CartesianCoordinate fetchCartesianCoordinate(double x, double y, double z){
+    @PatternInstance(
+            patternName = "Flyweight",
+            participants = { "FlyweightFactory", "Flyweight" }
+    )
+    public static synchronized CartesianCoordinate ensureCartesianCoordinate(double x, double y, double z){
 
         try{
             CartesianCoordinate instance = new CartesianCoordinate(x,y,z);
@@ -35,8 +46,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * convenience fetcher
      *
      */
-    public static CartesianCoordinate fetchCartesianCoordinate() {
-        return fetchCartesianCoordinate(0,0,0);
+    public static CartesianCoordinate ensureCartesianCoordinate() {
+        return ensureCartesianCoordinate(0,0,0);
     }
 
     /**
@@ -76,7 +87,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
             } else {
                 phi = Math.PI / 2;
             }
-            SphericCoordinate temp = SphericCoordinate.fetchSphericCoordinate(radius, theta, phi);
+            SphericCoordinate temp = SphericCoordinate.ensureSphericCoordinate(radius, theta, phi);
             temp.assertClassInvariants();
             return temp;
         }catch (Exception e){
@@ -107,7 +118,10 @@ public class CartesianCoordinate extends AbstractCoordinate {
             throw new Exception("Error at coordinate comparison", e);
         }
     }
-
+    @PatternInstance(
+            patternName = "Template Method",
+            participants = { "Concrete Class - Primitive Operation" }
+    )
     protected double doGetCartesianDistance(CartesianCoordinate otherCoordinate) throws Exception{
         assertNotNull(otherCoordinate);
         double powX = Math.pow((this.getX() - otherCoordinate.getX()), 2);

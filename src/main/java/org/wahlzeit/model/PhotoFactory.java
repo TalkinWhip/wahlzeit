@@ -8,12 +8,20 @@ package org.wahlzeit.model;
 import java.sql.*;
 
 import org.wahlzeit.services.*;
+import org.wahlzeit.utils.PatternInstance;
 
 /**
  * An Abstract Factory for creating photos and related objects.
  */
+@PatternInstance(
+		patternName = "Abstract Factory",
+		participants = { "AbstractFactory" }
+)
 public class PhotoFactory {
-	
+	@PatternInstance(
+			patternName = "Singleton",
+			participants = { "Singleton" }
+	)
 	/**
 	 * Hidden singleton instance; needs to be initialized from the outside.
 	 */
@@ -22,6 +30,7 @@ public class PhotoFactory {
 	/**
 	 * Public singleton access method.
 	 */
+
 	public static synchronized PhotoFactory getInstance() {
 		if (instance == null) {
 			SysLog.logSysInfo("setting domain-specific PhotoFactory");

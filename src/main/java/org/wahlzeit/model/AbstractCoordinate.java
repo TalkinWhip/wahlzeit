@@ -1,6 +1,13 @@
 package org.wahlzeit.model;
 
 
+import org.wahlzeit.utils.PatternInstance;
+
+@PatternInstance(
+        patternName = "Bridge",
+        participants = { "Implementor" }
+)
+
 public abstract class AbstractCoordinate implements Coordinate {
 
     private double DELTA = 0.000001; //used similarly in both sub-classes for double comparison
@@ -12,6 +19,10 @@ public abstract class AbstractCoordinate implements Coordinate {
     public abstract int hashCode(); // subs need to implement a hashCode method, since the equals method has been preimplemented
 
 
+    @PatternInstance(
+            patternName = "Template Method",
+            participants = { "Abstract class - Template Method" }
+    )
     public double getCartesianDistance(Coordinate coordinate) throws Exception{
         assertNotNull(coordinate);
         try {
@@ -23,6 +34,10 @@ public abstract class AbstractCoordinate implements Coordinate {
         }
     }
 
+    @PatternInstance(
+            patternName = "Template Method",
+            participants = { "Abstract class - Template Method" }
+    )
     public double getCentralAngle(Coordinate coordinate) throws Exception{
         assertNotNull(coordinate);
         try {

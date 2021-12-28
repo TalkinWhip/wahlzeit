@@ -5,7 +5,7 @@ import org.wahlzeit.utils.PatternInstance;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Year;
-
+//a
 @PatternInstance(
         patternName = "AbstractFactory",
         participants = { "ConcreteProduct" }

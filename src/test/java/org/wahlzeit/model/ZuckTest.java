@@ -47,6 +47,10 @@ public class ZuckTest {
 
         assertEquals(1,zucky.getZuckPhotos().size());
 
+        zucky.removeZuckPhoto(zp);
+
+        assertEquals(0,zucky.getZuckPhotos().size());
+
     }
     @Test
     public void testAddRemoveZuckPhoto(){

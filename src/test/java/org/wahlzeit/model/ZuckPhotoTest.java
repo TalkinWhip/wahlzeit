@@ -23,6 +23,17 @@ public class ZuckPhotoTest {
     //assert
     assertEquals(photo.getYearOfPhoto(),year);
 }
+    @Test
+    public void testConstructorZuck() throws Exception{
+        //arrange
+        int year = 2019;
+        Zuck z = Mockito.mock(Zuck.class);
+        //act
+        ZuckPhoto photo = new ZuckPhoto(year,z);
+        //assert
+        assertEquals(photo.getYearOfPhoto(),year);
+        assertEquals(photo.getZuck(), z);
+    }
 
 @Test(expected = Exception.class)
     public void testConstructorInvalidOver() throws Exception{

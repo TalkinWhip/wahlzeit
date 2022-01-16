@@ -8,19 +8,19 @@ import java.util.Objects;
 
 public class Zuck {
 
-    private ZuckType type;
+    private ZuckManager.ZuckType type;
     private static ZuckManager manager;
     private int zuckID;
     HashSet<ZuckPhoto> zuckPhotos;
 
-    protected Zuck(ZuckType zuckType) { // get zucktype and createInstance of Zuck in it.
+    protected Zuck(ZuckManager.ZuckType zuckType) { // empty HashSet
         assertIsNotNull(zuckType);
         this.type = zuckType;
         this.manager = ZuckManager.getInstance();
         this.zuckPhotos = new HashSet<>();
         this.zuckID = hashCode(zuckType, zuckPhotos);
     }
-    protected Zuck(ZuckType zuckType, HashSet<ZuckPhoto> zuckPhotos) { // get zucktype and createInstance of Zuck in it.
+    protected Zuck(ZuckManager.ZuckType zuckType, HashSet<ZuckPhoto> zuckPhotos) { // predefined hashset
         assertIsNotNull(zuckPhotos);
         assertIsNotNull(zuckType);
         this.type = zuckType;
@@ -54,7 +54,7 @@ public class Zuck {
         return this.zuckID;
     }
 
-    public int hashCode(ZuckType t, HashSet<ZuckPhoto> zp) {
+    public int hashCode(ZuckManager.ZuckType t, HashSet<ZuckPhoto> zp) {
         return Objects.hash(t, zp);
     }
     private void assertIsNotNull(Object o){

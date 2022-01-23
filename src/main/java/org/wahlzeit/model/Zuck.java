@@ -12,7 +12,7 @@ public class Zuck {
     private static ZuckManager manager;
     private int zuckID;
     HashSet<ZuckPhoto> zuckPhotos;
-
+    // tracing Zuck: Step 3 (multiple constructors)
     protected Zuck(ZuckManager.ZuckType zuckType) { // empty HashSet
         assertIsNotNull(zuckType);
         this.type = zuckType;

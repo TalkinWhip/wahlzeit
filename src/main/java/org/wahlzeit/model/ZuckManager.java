@@ -17,7 +17,7 @@ public class ZuckManager extends ObjectManager {
 
     private static HashMap<Integer, Zuck> zuckInstances = new HashMap<>();
     private static HashMap<Integer, ZuckManager.ZuckType> zuckTypeInstances = new HashMap<>(); // each zucktype can have it's own subtypes, this is done in each ZuckManager.ZuckType class. Here is a flat hm of ZuckTypes.
-    // tracing Zuck: Step 1 (multiple methods)
+    // tracing Zuck: Step 1 (multiple overloaded methods)
     public Zuck ensureZuck(String zuckType) { //
         assertIsNotNull(zuckType);
         ZuckType zt = this.ensureZuckType(zuckType);
@@ -116,7 +116,7 @@ public class ZuckManager extends ObjectManager {
             return Objects.hash(typeName);
         }
 
-
+        // tracing Zuck: Step 2 (multiple overloaded methods)
         protected Zuck createInstance(HashSet<ZuckPhoto> zp){ //create zuck instance with existing set of photos - flyweight in manager.
             assertIsNotNull(zp);
             return new Zuck(this, zp);

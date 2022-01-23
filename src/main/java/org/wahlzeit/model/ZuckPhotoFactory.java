@@ -58,7 +58,7 @@ public class ZuckPhotoFactory extends PhotoFactory{
     public ZuckPhoto createPhoto() {
         return new ZuckPhoto();
     }
-
+    // tracing ZuckPhoto: Step 2 (multiple overloaded methods)
     /**
      *
      */
@@ -72,6 +72,7 @@ public class ZuckPhotoFactory extends PhotoFactory{
     public ZuckPhoto createPhoto(ResultSet rs) throws SQLException {
         return new ZuckPhoto(rs);
     }
+
 
     /**
      *

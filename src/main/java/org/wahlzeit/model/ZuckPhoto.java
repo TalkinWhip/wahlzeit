@@ -15,6 +15,7 @@ public class ZuckPhoto extends Photo{
     private int yearOfPhoto;
     private String mood;
     private Zuck zuck;
+    // tracing ZuckPhoto: Step 4 (multiple convenience constructors)
     public ZuckPhoto(int yearOfPhoto) throws Exception{
         super();
         if ( 1900 > yearOfPhoto || yearOfPhoto > Year.now().getValue()) { throw new Exception("invalid yearOfPhoto"); }

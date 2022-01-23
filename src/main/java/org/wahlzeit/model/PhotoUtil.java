@@ -22,6 +22,7 @@ public class PhotoUtil {
 	 * 
 	 */
 	public static Photo createPhoto(File source, PhotoId id) throws Exception {
+		// tracing ZuckPhoto: Step 3
 		Photo result = ZuckPhotoFactory.getInstance().createPhoto(id);
 		
 		Image sourceImage = createImageFiles(source, id);

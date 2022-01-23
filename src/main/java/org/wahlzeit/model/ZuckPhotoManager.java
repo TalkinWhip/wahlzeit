@@ -14,6 +14,7 @@ public class ZuckPhotoManager extends PhotoManager{
     @Override
     protected ZuckPhoto createObject(ResultSet rset) throws SQLException {
         return ZuckPhotoFactory.getInstance().createPhoto(rset);
+        // tracing ZuckPhoto: Step 1
     }
 
 

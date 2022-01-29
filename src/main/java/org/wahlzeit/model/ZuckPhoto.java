@@ -11,7 +11,12 @@ import java.time.Year;
         participants = { "ConcreteProduct" }
 )
 public class ZuckPhoto extends Photo{
-
+    /**
+     * Collaboration Specification:
+     * Depiction = { Service, Client }
+     * Depiction.Service → Zuck
+     * Depiction.Client → ZuckPhoto
+     */
     private int yearOfPhoto;
     private String mood;
     private Zuck zuck;
@@ -27,6 +32,7 @@ public class ZuckPhoto extends Photo{
         if ( 1900 > yearOfPhoto || yearOfPhoto > Year.now().getValue()) { throw new Exception("invalid yearOfPhoto"); }
         this.yearOfPhoto = yearOfPhoto;
         this.zuck = zuck;
+
     }
 
     public ZuckPhoto() {

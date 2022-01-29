@@ -12,7 +12,12 @@ public class ZuckManager extends ObjectManager {
 
     public ZuckManager(){
     }
-
+    /**
+     * Collaboration Specification:
+     * Manager = { Manager, Element }
+     * Manager.Manager → ZuckManager
+     * Manager.Element → Zuck
+     */
     protected static ZuckManager instance = new ZuckManager();
 
     private static HashMap<Integer, Zuck> zuckInstances = new HashMap<>();
@@ -90,6 +95,12 @@ public class ZuckManager extends ObjectManager {
         return null;
     }
     public class ZuckType {
+        /**
+         * Collaboration Specification:
+         * TypeObject = { Type, BaseObject }
+         * TypeObject.Type → ZuckType
+         * TypeObject.BaseObject → Zuck
+         */
         private String zuckType;
         private int ztID;
         private ZuckManager.ZuckType superType; // if there isn't a supertype leave at null, makes checking isSubtype/isLeaf easier.
